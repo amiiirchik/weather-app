@@ -1,20 +1,17 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, computed } from 'vue';
 
 function pushToP(){
 }
 
 function fetchData(inp){
   let city = ref(inp)
-  let temp = ref(null)
-  let text = reactive()
-  fetch('http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q={city._value}&aqi=no')
+  let text = ref()
+
+  fetch(`http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q=${city._value}&aqi=no`)
   .then(res => res.json())
-  .then(data => temp = data.current.temp_c)
-  .then(data => console.log(data))
-  .finally(()=>{
-    text = `Температура воздуха в ${city} : ${temp}`
-  })
+  .then(data => data.current.temp_c)
+  .then(temp => text = temp + 'asd')
   .catch(err => console.warn(err))
 
 
@@ -26,7 +23,7 @@ function fetchData(inp){
 <template>
   <div>
     <p>{{text}}</p>
-    <input v-model="inp" placeholder="Город">
+    <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город">
     <button @focusout="fetchData(inp)">Посмотреть погоду</button>
   </div>
 </template>
@@ -44,6 +41,7 @@ div
   input
     outline: none
     border: none
+    height: 20px
 
   p
     font-family: "Arial", monospace
