@@ -1,11 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, computed } from 'vue';
 
 const dataArrived = ref(false)
+let data = ref('')
+let text = reactive('')
+let count = 0
 
 function pushToP(val){
-  return `${val}`
+  console.log(++count + ' ' + data)
+  data = val
+  return `${data}`
 }
+
+
 
 function fetchData(inp){
   let city = ref(inp)
@@ -14,7 +21,7 @@ function fetchData(inp){
   .then(res => res.json())
   .then(data => data.current.temp_c)
   .then(temp => {
-    pushToP(temp)
+    text = pushToP(temp)
   })
   .finally(() => { dataArrived.value = true })
   .catch(err => console.warn(err))
@@ -25,8 +32,8 @@ function fetchData(inp){
 
 <template>
   <div>
-    <p v-if="dataArrived">{{pushToP()}}</p>
-    <p v-else>Температура воздуха</p>
+    <p v-if="dataArrived">{{text}}</p>
+    <!-- <p v-else>Температура воздуха</p> -->
     <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город">
     <button @focusout="fetchData(inp)">Посмотреть погоду</button>
   </div>
