@@ -1,17 +1,8 @@
 <script setup>
-import { reactive, ref, computed } from 'vue';
+import { ref } from 'vue';
 
 const dataArrived = ref(false)
-let data = ref('')
-let text = reactive('')
-let count = 0
-
-function pushToP(val){
-  console.log(++count + ' ' + data)
-  data = val
-  return `${data}`
-}
-
+let text = ref('')
 
 
 function fetchData(inp){
@@ -21,12 +12,12 @@ function fetchData(inp){
   .then(res => res.json())
   .then(data => data.current.temp_c)
   .then(temp => {
-    text = pushToP(temp)
+    text = temp
+    dataArrived.value = false
   })
   .finally(() => { dataArrived.value = true })
   .catch(err => console.warn(err))
-
-}
+``}
 
 </script>
 
