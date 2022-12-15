@@ -1,28 +1,32 @@
 <script setup>
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref } from 'vue';
 
-function pushToP(){
+const dataArrived = ref(false)
+
+function pushToP(val){
+  return `${val}`
 }
 
 function fetchData(inp){
   let city = ref(inp)
-  let text = ref()
 
   fetch(`http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q=${city._value}&aqi=no`)
   .then(res => res.json())
   .then(data => data.current.temp_c)
-  .then(temp => text = temp + 'asd')
+  .then(temp => {
+    pushToP(temp)
+  })
+  .finally(() => { dataArrived.value = true })
   .catch(err => console.warn(err))
 
-
-  //pushToP()
 }
 
 </script>
 
 <template>
   <div>
-    <p>{{text}}</p>
+    <p v-if="dataArrived">{{pushToP()}}</p>
+    <p v-else>Температура воздуха</p>
     <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город">
     <button @focusout="fetchData(inp)">Посмотреть погоду</button>
   </div>
@@ -46,4 +50,5 @@ div
   p
     font-family: "Arial", monospace
     font-size: 30px
+    color: black
 </style>
