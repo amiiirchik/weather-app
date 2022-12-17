@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from 'vue';
+import router from '../router'
 
 const dataArrived = ref(false)
 let tempPrint = ref('')
 let textPrint = ref('')
 let feelsPrint = ref('')
 let windPrint = ref('')
+let windDirPrint = ref('')
+let picture = ref('')
 
 
 function fetchData(inp){
@@ -18,6 +21,9 @@ function fetchData(inp){
     textPrint = data.current.condition.text
     feelsPrint = data.current.feelslike_c
     windPrint = data.current.wind_kph
+    windDirPrint = data.current.wind_dir
+    //picture = 'https//' + (data.current.condition.icon).slice(2)
+    console.log(picture)
     dataArrived.value = false
   })
   .finally(() => { dataArrived.value = true })
@@ -29,14 +35,22 @@ function fetchData(inp){
 <template>
   <div>
     <div v-if="dataArrived">
-      <p class="tempPrint">Температура: {{tempPrint}}</p><br>
+      <!-- <img :src="{picture}" width="64" height="64"> -->
+      <p class="tempPrint">Temperature: {{tempPrint}}°C</p><br>
       <p class="textPrint">{{textPrint}}</p>
-      <p class="feelsPrint">Ощущается как: {{feelsPrint}}</p>
-      <p class="windPrint">Скорость ветра: {{windPrint}}</p>
+      <p class="feelsPrint">Feels like: {{feelsPrint}}°C</p>
+      <p class="windPrint">Wind: {{windPrint}} km/h</p>
+      <p class="windDirPrint" v-if="windDirPrint.length == 1">Wind direction: {{windDirPrint}}</p>
+      <p class="windDirPrint" v-else>Wind direction: {{windDirPrint[0]}}-{{windDirPrint[1]}}{{windDirPrint[2]}}</p>
     </div>
     <p v-else>Погода</p>
-    <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город">
-    <button @focusout="fetchData(inp)">Посмотреть погоду</button>
+    <input v-model="inp" placeholder="Город">
+    <!-- <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город"> -->
+    <button>
+      <router-link v-for="link in router.routes" :key="link.name" :to="link.path ==`/weather`">
+        Посмотреть погоду
+      </router-link>
+    </button>
   </div>
 </template>
 

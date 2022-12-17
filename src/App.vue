@@ -1,9 +1,11 @@
 <script setup>
 import Main from './components/Main.vue'
+import WeatherOutput from './components/WeatherOutput.vue'
 </script>
 
 <template>
   <Main />
+  <WeatherOutput />
 </template>
 
 <style scoped>
