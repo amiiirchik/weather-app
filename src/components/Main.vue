@@ -45,11 +45,12 @@ function fetchData(inp){
     </div>
     <p v-else>Погода</p>
     <input v-model="inp" placeholder="Город">
-    <!-- <input v-model="inp" @keydown.enter="fetchData(inp)" placeholder="Город"> -->
     <button>
-      <router-link v-for="link in router.routes" :key="link.name" :to="link.path ==`/weather`">
-        Посмотреть погоду
+      <router-link to="/weather">
+        Перейти на другую страницу
       </router-link>
+      <router-view />
+
     </button>
   </div>
 </template>
@@ -78,4 +79,7 @@ div
     width: 100%
     display: flex
     justify-content: center
+
+  button
+    color: black
 </style>

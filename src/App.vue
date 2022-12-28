@@ -1,11 +1,11 @@
 <script setup>
 import Main from './components/Main.vue'
 import WeatherOutput from './components/WeatherOutput.vue'
+import router from './router'
 </script>
 
 <template>
   <Main />
-  <WeatherOutput />
 </template>
 
 <style scoped>

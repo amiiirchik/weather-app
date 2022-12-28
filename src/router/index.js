@@ -1,4 +1,4 @@
-import{ createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Main from '../components/Main.vue'
 import WeatherOutput from '../components/WeatherOutput.vue'
 
@@ -12,6 +12,7 @@ const routes = [
     name: 'Main',
     path: '/',
     //component: Main,
+    alias: '/main' 
   }
 ]
 
