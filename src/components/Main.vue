@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import router from '../router'
 
 const dataArrived = ref(false)
@@ -10,9 +10,9 @@ let windPrint = ref('')
 let windDirPrint = ref('')
 let picture = ref('')
 
-
 function fetchData(inp){
   let city = ref(inp)
+  console.log(city)
 
   fetch(`http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q=${city._value}&aqi=no`)
   .then(res => res.json())
@@ -45,12 +45,12 @@ function fetchData(inp){
     </div>
     <p v-else>Погода</p>
     <input v-model="inp" placeholder="Город">
-    <button>
-      <router-link to="/weather">
+    <button @click="fetchData(inp)">
+      <!-- <router-link to="/weather">
         Перейти на другую страницу
-      </router-link>
-      <router-view />
-
+      </router-link> -->
+      <!-- <router-view /> -->
+      Узнать погоду в {{ inp }} 
     </button>
   </div>
 </template>
