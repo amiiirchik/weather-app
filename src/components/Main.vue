@@ -1,21 +1,27 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import router from '../router'
+import { Loader } from '@googlemaps/js-api-loader';
 
 const dataArrived = ref(false)
-let tempPrint = ref('')
-let textPrint = ref('')
-let feelsPrint = ref('')
-let windPrint = ref('')
-let windDirPrint = ref('')
-let picture = ref('')
+let tempPrint = ref(''), textPrint = ref(''), feelsPrint = ref(''), windPrint = ref(''), windDirPrint = ref('') ,picture = ref('')
 
-async function fetchData(inp){
-  this.$getLocation(options)
-  .then(coordinates => {
-    console.log(coordinates);
-  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+  else{
+    console.log('хук не работает')
+  }
+
+
+async function showPosition(pos){
+  console.log(pos)
 }
+
+// async function fetchData(inp){
+  
+// }
 
 // function fetchData(inp){
 //   let city = ref(inp)
