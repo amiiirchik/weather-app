@@ -11,7 +11,6 @@ const routes = [
   {
     name: 'Main',
     path: '/',
-    //component: Main,
     alias: '/main' 
   }
 ]

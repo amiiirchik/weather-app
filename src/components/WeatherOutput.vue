@@ -3,7 +3,8 @@
 </script>
 
 <template>
-<p>Другая страничка</p>
+<p>Вторая страница</p>
+
 </template>
 
 <style scoped lang="sass">

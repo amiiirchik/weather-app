@@ -1,7 +1,6 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import router from '../router'
-import { Loader } from '@googlemaps/js-api-loader';
 
 const dataArrived = ref(false)
 let tempPrint = ref(''), textPrint = ref(''), feelsPrint = ref(''), windPrint = ref(''), windDirPrint = ref('') ,picture = ref('')
@@ -14,33 +13,29 @@ let tempPrint = ref(''), textPrint = ref(''), feelsPrint = ref(''), windPrint = 
     console.log('хук не работает')
   }
 
-
 async function showPosition(pos){
   console.log(pos)
 }
 
-// async function fetchData(inp){
-  
-// }
 
-// function fetchData(inp){
-//   let city = ref(inp)
+function fetchData(inp){
+  let city = ref(inp)
 
-//   fetch(`http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q=${city._value}&aqi=no`)
-//   .then(res => res.json())
-//   .then(data => {
-//     tempPrint = data.current.temp_c
-//     textPrint = data.current.condition.text
-//     feelsPrint = data.current.feelslike_c
-//     windPrint = data.current.wind_kph
-//     windDirPrint = data.current.wind_dir
-//     //picture = 'https//' + (data.current.condition.icon).slice(2)
-//     console.log(picture)
-//     dataArrived.value = false
-//   })
-//   .finally(() => { dataArrived.value = true })
-//   .catch(err => console.warn(err))
-// }
+  fetch(`http://api.weatherapi.com/v1/current.json?key=9c6b22d85cd749bdbc911534221412&q=${city._value}&aqi=no`)
+  .then(res => res.json())
+  .then(data => {
+    tempPrint = data.current.temp_c
+    textPrint = data.current.condition.text
+    feelsPrint = data.current.feelslike_c
+    windPrint = data.current.wind_kph
+    windDirPrint = data.current.wind_dir
+    //picture = 'https//' + (data.current.condition.icon).slice(2)
+    console.log(picture)
+    dataArrived.value = false
+  })
+  .finally(() => { dataArrived.value = true })
+  .catch(err => console.warn(err))
+}
 
 </script>
 
@@ -58,14 +53,15 @@ async function showPosition(pos){
     <p v-else>Погода</p>
     <input v-model="inp" placeholder="Город" autofocus>
     <button @click="fetchData(inp)">
-      <!-- <router-link to="/weather">
-        Перейти на другую страницу
-      </router-link> -->
-      <!-- <router-view /> -->
       Узнать погоду
     </button>
+      <router-link to="/weather">
+        Перейти на другую страницу
+      </router-link>
   </div>
+
 </template>
+
 
 <style scoped lang="sass">
 div
