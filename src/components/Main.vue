@@ -2,6 +2,8 @@
 import { reactive, ref } from 'vue'
 import router from '../router'
 
+let city = ref('')
+
 const dataArrived = ref(false)
 let tempPrint = ref(''), textPrint = ref(''), feelsPrint = ref(''), windPrint = ref(''), windDirPrint = ref('') ,picture = ref('')
 
@@ -29,7 +31,7 @@ function fetchData(inp){
     feelsPrint = data.current.feelslike_c
     windPrint = data.current.wind_kph
     windDirPrint = data.current.wind_dir
-    //picture = 'https//' + (data.current.condition.icon).slice(2)
+    picture = 'https//' + (data.current.condition.icon).slice(2)
     console.log(picture)
     dataArrived.value = false
   })
@@ -42,7 +44,9 @@ function fetchData(inp){
 <template>
   <div>
     <div v-if="dataArrived">
-      <!-- <img :src="{picture}" width="64" height="64"> -->
+      <p>1-{{picture}}</p>
+      <p>2-{picture}</p>
+      <img :src="picture" width="64" height="64">
       <p class="tempPrint">Temperature: {{tempPrint}}°C</p><br>
       <p class="textPrint">{{textPrint}}</p>
       <p class="feelsPrint">Feels like: {{feelsPrint}}°C</p>
@@ -51,9 +55,9 @@ function fetchData(inp){
       <p class="windDirPrint" v-else>Wind direction: {{windDirPrint[0]}}-{{windDirPrint[1]}}{{windDirPrint[2]}}</p>
     </div>
     <p v-else>Погода</p>
-    <input v-model="inp" placeholder="Город" autofocus>
+    <input @keyup="city = inp" @keypress.enter="fetchData(inp)"  v-model="inp" placeholder="Город" autofocus>
     <button @click="fetchData(inp)">
-      Узнать погоду
+      Узнать погоду в {{city}}
     </button>
       <router-link to="/weather">
         Перейти на другую страницу
